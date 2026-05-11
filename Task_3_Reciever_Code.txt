@@ -1,0 +1,38 @@
+#include <Braccio.h>
+#include <Servo.h>
+
+Servo base;
+Servo shoulder;
+Servo elbow;
+Servo wrist_rot;
+Servo wrist_ver;
+Servo gripper;
+
+void setup() {  
+  Braccio.begin();
+}
+
+void loop() {
+
+  // STEP 1: WAIT for Robot 1 to reach handover
+  delay(5000);
+
+  // STEP 2: Move to HANDOVER POSITION
+  Braccio.ServoMovement(20, 120, 60, 150, 90, 90, 10); // open gripper
+  delay(3000);
+
+  // STEP 3: ALIGN precisely
+  Braccio.ServoMovement(20, 120, 60, 150, 90, 90, 10);
+  delay(2000);
+
+  // STEP 4: GRAB object
+  Braccio.ServoMovement(20, 120, 60, 150, 90, 90, 73);
+  delay(3000);
+
+  // STEP 5: HOLD (important before Robot 1 releases)
+  delay(2000);
+
+  // STEP 6: Move away safely
+  Braccio.ServoMovement(20, 180, 45, 180, 90, 90, 73);
+  delay(5000);
+}
